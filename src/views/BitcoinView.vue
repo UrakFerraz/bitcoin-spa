@@ -12,7 +12,10 @@
 <script async setup lang="ts">
 import TheBitcoin from "../components/TheBitcoin.vue";
 import useCoinData from "@/composables/useCoinData";
-const { coinMarketChart, coinSimple, isLoaded, coinCurrentData } = useCoinData("bitcoin");
+const { coinMarketChart, coinSimple, isLoaded, coinCurrentData } = useCoinData(
+  "bitcoin",
+  10000
+);
 </script>
 
 <style scoped lang="scss">

@@ -1,5 +1,5 @@
 <template>
-  <svg viewBox="0 -1500 3460 2500" class="chart">
+  <svg viewBox="0 -1100 3460 2300" class="chart">
     <defs>
       <linearGradient
         id="myLinearGradient1"
@@ -15,7 +15,6 @@
     </defs>
     <polyline
       class="bg-path"
-      v-if="chartData"
       fill="none"
       stroke-width="10"
       stroke-linecap="round"
@@ -23,7 +22,6 @@
     />
     <polyline
       class="path"
-      v-if="chartData"
       fill="none"
       stroke="url(#myLinearGradient1)"
       stroke-width="10"
@@ -56,6 +54,8 @@ onMounted(() => {
 <style scoped>
 .chart {
   width: 100%;
+  border-left: 1px solid rgba(000, 000, 000, 0.15);
+  border-bottom: 1px solid rgba(000, 000, 000, 0.15);
 }
 .bg-path {
   stroke: #065f46;
