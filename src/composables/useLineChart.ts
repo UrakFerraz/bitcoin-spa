@@ -1,26 +1,27 @@
-import type { Ref } from "vue";
-
-type BitcoinMarketChartInterface = Ref<{
-  market_caps: [number, number][];
-  prices: [number, number][];
-  total_volumes: [number, number][];
-}>;
+import type CoinMarketChartInterface from "@/modules/interfaces/CoinMarketChartInterface";
 
 export default function createPolylinePoints(
-  coinData: BitcoinMarketChartInterface,
-  type: string
-): [number, number] {
-  const points = coinData;
+  coinData: CoinMarketChartInterface,
+  type: keyof CoinMarketChartInterface
+) {
+  console.log(coinData);
 
-  return points[type].map((itemArray, index, items) => {
-    const baseNumber1 = items[0][0];
-    const baseNumber2 = items[0][1];
-    const convertBaseNumber1 =
-      Math.round(itemArray[0] - baseNumber1) / 10000000;
-    const convertBaseNumber2 =
-      Math.round(itemArray[1] - baseNumber2) / 100000000;
-    const columns = index * 12;
-    console.log([columns, convertBaseNumber2]);
-    return [columns, convertBaseNumber2];
-  });
+  const typeName = type as keyof CoinMarketChartInterface;
+  const data = coinData[typeName] as unknown as number[][];
+  console.log(data);
+
+  const points = data.map(
+    (itemArray: number[], index: number, items: number[][]) => {
+      const baseNumber1 = items[0][0];
+      const baseNumber2 = items[0][1];
+      const convertBaseNumber1 =
+        Math.round(itemArray[0] - baseNumber1) / 10000000;
+      const convertBaseNumber2 =
+        Math.round(itemArray[1] - baseNumber2) / 100000000;
+      const polylinePoints = convertBaseNumber2 - convertBaseNumber2 * 2;
+      const column = index * 12;
+      return [column, polylinePoints];
+    }
+  );
+  return { points };
 }

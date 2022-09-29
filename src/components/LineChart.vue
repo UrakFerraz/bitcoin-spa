@@ -34,25 +34,29 @@
 </template>
 
 <script setup lang="ts">
-import useLineChart from "@/composables/useLineChart";
-import { onMounted, ref, type Ref } from "vue";
-type BitcoinMarketChartInterface = Ref<{
-  market_caps: [number, number][];
-  prices: [number, number][];
-  total_volumes: [number, number][];
-}>;
+import createPolylinePoints from "@/composables/useLineChart";
+import { onMounted, ref } from "vue";
+import type CoinMarketChartInterface from "@/modules/interfaces/CoinMarketChartInterface";
 const chartData = ref<string>();
 const props = defineProps<{
-  coinData: BitcoinMarketChartInterface;
+  coinData: CoinMarketChartInterface;
   type: string;
 }>();
 
+const type = props.type as keyof CoinMarketChartInterface;
+const { points } = createPolylinePoints(props.coinData, type);
 onMounted(() => {
-  chartData.value = useLineChart(props.coinData, props.type).join(",");
+  console.log(props);
+  console.log(points);
+
+  chartData.value = points.join(",");
 });
 </script>
 
 <style scoped>
+.chart {
+  width: 100%;
+}
 .bg-path {
   stroke: #065f46;
   opacity: 0.3;
