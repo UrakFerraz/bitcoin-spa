@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <TheBitcoin
+    <TheCoin
       v-if="coinMarketChart && isLoaded"
       :data="coinSimple"
       :chart="coinMarketChart"
@@ -10,7 +10,7 @@
 </template>
 
 <script async setup lang="ts">
-import TheBitcoin from "../components/TheBitcoin.vue";
+import TheCoin from "@/components/TheCoin.vue";
 import useCoinData from "@/composables/useCoinData";
 const { coinMarketChart, coinSimple, isLoaded, coinCurrentData } = useCoinData(
   "bitcoin",
