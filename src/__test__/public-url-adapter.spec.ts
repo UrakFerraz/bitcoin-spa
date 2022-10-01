@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import PublicURLAdapter from "./public-url-adapter";
+import PublicURLAdapter from "../modules/coingecko/public-url-adapter";
 
 const ethereumDataMock = {
   current_data:
