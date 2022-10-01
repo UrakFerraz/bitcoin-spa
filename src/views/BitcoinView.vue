@@ -1,9 +1,17 @@
 <template>
   <div class="main">
     <TheCoin
-      v-if="coinMarketChart && isLoaded"
+      class="main__coin-card"
+      v-if="isLoaded"
       :data="coinSimple"
-      :chart="coinMarketChart"
+      :chart="coinMarketChart!"
+      :current-data="coinCurrentData"
+    />
+    <TheCoin
+      class="main__coin-card"
+      v-else
+      :data="coinSimple"
+      :chart="coinMarketChart!"
       :current-data="coinCurrentData"
     />
   </div>
@@ -20,8 +28,14 @@ const { coinMarketChart, coinSimple, isLoaded, coinCurrentData } = useCoinData(
 
 <style scoped lang="scss">
 .main {
-  display: flex;
-  flex-flow: column wrap;
+  display: grid;
+  grid-template-columns: 1fr;
   align-content: center;
+  justify-items: center;
+  background: transparent;
+  &__coin-car {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
 }
 </style>
