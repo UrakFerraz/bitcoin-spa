@@ -1,3 +1,4 @@
+import { describe, it } from "vitest";
 import HelloWorld from "@/components/HelloWorld.vue";
 
 describe("HelloWorld", () => {
