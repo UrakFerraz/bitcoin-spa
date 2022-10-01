@@ -1,6 +1,6 @@
 <template>
   <div
-    class="text-neutral-grey font-body shadow-lg rounded-lg p-8 m-2 bg-gradient-to-t from-primary to-secondary coin-card"
+    class="text-neutral-grey font-body shadow-2xl rounded-lg p-8 m-2 coin-card"
   >
     <CoinCardHeader :currentData="currentData" />
     <div class="text-tertiary font-bold text-2xl text-center">
