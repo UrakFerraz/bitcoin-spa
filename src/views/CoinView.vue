@@ -18,18 +18,34 @@
     />
     <TheLoading v-else-if="!isFirstLoad && !isLoaded" />
     <CryptosMenu />
+    <div class="historical border p-10 border-neutral-grey rounded-lg">
+      <p class="text-tertiary mb-6 font-regular text-xl text-center">
+        Histórico:
+      </p>
+      <Datepicker v-model="datePicker" />
+      <p
+        v-if="refreshPrice !== null && refreshPrice !== undefined"
+        class="text-tertiary mt-6 font-bold text-xl text-center"
+      >
+        {{ refreshPrice }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script async setup lang="ts">
 import CoinCard from "@/components/CoinCard/CoinCard.vue";
-import { onBeforeMount, onMounted, type Ref, ref } from "vue";
+import { onBeforeMount, onMounted, type Ref, ref, watch, computed } from "vue";
 import type CoinDataInterface from "@/modules/interfaces/CoinDataInterface";
 import PublicURLAdapter from "@/services/api/public-url-adapter";
 import TheLoading from "@/components/TheLoading.vue";
 import { useRoute } from "vue-router";
 import CryptosMenu from "@/components/CryptosMenu.vue";
-
+import "@vuepic/vue-datepicker/dist/main.css";
+import Datepicker from "@vuepic/vue-datepicker";
+import CoinGeckoAPI_V3 from "@/modules/coingecko/coingecko-urls";
+import useCurrency from "@/composables/useCurrency";
+const { setCurrency } = useCurrency();
 function actualDate() {
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
@@ -53,6 +69,46 @@ const historical = ref();
 const dateTime = ref<string>();
 const isLoaded = ref(false);
 const isFirstLoad = ref(false);
+const datePicker = ref<string>();
+const historicalUrl = ref<string>();
+const historicalPrice = ref<{
+  prices: number[][];
+  market_caps: number[][];
+  total_volumes: number[][];
+}>();
+
+const refreshPrice = computed(() => {
+  console.log(historicalPrice.value);
+
+  if (historicalPrice.value !== undefined) {
+    return setCurrency(historicalPrice.value.prices[0][1]);
+  } else {
+    return null;
+  }
+});
+
+watch(datePicker, async (value) => {
+  if (
+    coinId.value !== undefined &&
+    currency.value !== undefined &&
+    value !== undefined
+  ) {
+    historicalUrl.value = CoinGeckoAPI_V3.getHistoricalURL(
+      coinId.value,
+      currency.value,
+      value
+    );
+    const response = await fetch(historicalUrl.value);
+    const data = await response.json();
+    historicalPrice.value = data;
+  }
+  console.log(value);
+  const date1 = new Date("Fri Oct 07 2022 12:02:00 GMT-0300");
+  console.log(
+    "===================================================================="
+  );
+  console.log(date1);
+});
 
 async function setCoinData(
   id: string,

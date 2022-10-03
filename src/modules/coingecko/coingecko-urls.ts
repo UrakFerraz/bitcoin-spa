@@ -31,9 +31,20 @@ export default class CoinGeckoAPI_V3 {
     currency: string,
     dateTime: string
   ) => {
-    // format: date-month-year hour(24):minute
     const convertDateToTimestamp = (dateTime: string) => {
-      const dateToParse = dateTime.split(" ");
+      function actualDate(dateTime: string) {
+        const adaptedDate = new Date(dateTime);
+        // format: date-month-year hour(24):minute
+        const formatMap = {
+          mm: adaptedDate.getMonth() + 1,
+          dd: adaptedDate.getDate(),
+          aa: adaptedDate.getFullYear().toString().slice(-2),
+          hour: adaptedDate.getHours() === 0 ? "0" : adaptedDate.getHours() - 1,
+          min: adaptedDate.getMinutes() === 0 ? "0" : adaptedDate.getMinutes(),
+        };
+        return `${formatMap.mm}/${formatMap.dd}/${formatMap.aa} ${formatMap.hour}:${formatMap.min}`;
+      }
+      const dateToParse = actualDate(dateTime).split(" ");
 
       return Math.floor(
         new Date(`${dateToParse[0]} ${dateToParse[1]}`).getTime() / 1000
