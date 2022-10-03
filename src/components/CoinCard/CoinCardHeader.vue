@@ -1,5 +1,5 @@
 <template>
-  <div class="coin-card__header">
+  <div class="coin-card__header" v-if="props.currentData !== undefined">
     <a
       class="text-neutral-grey text-sm font-xs button"
       :href="props.currentData.links.homepage[0]"
@@ -8,10 +8,10 @@
       <img :src="props.currentData.image.small" alt="" />
     </a>
     <div class="coin-card__title">
-      <p class="text-neutral-light text-sm font-thin capitalize text-2xl">
-        {{ props.currentData.id }}
+      <p class="text-neutral-light font-thin capitalize text-2xl text-left">
+        {{ props.currentData.name }}
       </p>
-      <p class="text-neutral-grey text-sm font-light uppercase">
+      <p class="text-neutral-grey text-sm font-light uppercase text-left">
         {{ props.currentData.symbol }}
       </p>
     </div>

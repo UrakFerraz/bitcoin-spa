@@ -1,35 +1,34 @@
 <template>
   <div
+    v-if="props.data !== undefined"
     class="text-neutral-grey font-body shadow-2xl rounded-lg p-8 m-2 coin-card"
   >
-    <CoinCardHeader :currentData="currentData" />
+    <CoinCardHeader :current-data="props.currentData" />
     <div class="text-tertiary font-bold text-2xl text-center">
-      {{ setCurrency(props.data.bitcoin.brl) }}
+      {{ setCurrency(props.data[props.coinId].brl) }}
     </div>
-    <CoinLineChart :data="data" :chart="chart" />
+    <CoinLineChart :data="props.data" :chart="chart" :coin-id="props.coinId" />
   </div>
 </template>
 
 <script setup lang="ts">
-import CoinLineChart from "@/components/CoinLineChart.vue";
+import CoinLineChart from "./CoinLineChart.vue";
 import useCurrency from "@/composables/useCurrency";
-import CoinCardHeader from "@/components/CoinCardHeader.vue";
+import CoinCardHeader from "./CoinCardHeader.vue";
 import type CoinMarketChartInterface from "@/modules/interfaces/CoinMarketChartInterface";
+import { onMounted } from "vue";
 const { setCurrency } = useCurrency();
-type Coin = {
-  bitcoin: {
-    brl: number;
-    brl_24h_change: number;
-    brl_24h_vol: number;
-    brl_market_cap: number;
-  };
-};
 
 const props = defineProps<{
-  data: Coin;
+  data: any;
   chart: CoinMarketChartInterface;
-  currentData: any;
+  currentData: unknown;
+  coinId: string;
 }>();
+
+onMounted(() => {
+  console.log(props);
+});
 </script>
 
 <style scoped lang="scss">
@@ -40,7 +39,6 @@ const props = defineProps<{
   &__header {
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-auto-flow: dense;
     gap: 10px;
   }
 }

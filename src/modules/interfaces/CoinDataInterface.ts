@@ -3,4 +3,5 @@ export default interface CoinDataInterface {
   include: string;
   market_chart: string;
   current_data: string;
+  historical?: string;
 }

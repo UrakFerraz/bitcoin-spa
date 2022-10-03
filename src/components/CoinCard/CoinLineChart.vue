@@ -1,5 +1,5 @@
 <template>
-  <div class="chart-wrapper">
+  <div class="chart-wrapper" v-if="chart !== undefined">
     <LineChartSvg :coinData="chart" :type="'market_caps'" />
     <p
       class="text-neutral-grey text-xs shadow-lg rounded-lg p-3 mb-3 bg-gradient-to-t from-terty to-secondary"
@@ -7,29 +7,32 @@
       24h
     </p>
     <span class="text-center"
-      >Vol: {{ setCurrency(props.data.bitcoin.brl_24h_vol) }}</span
+      >Vol: {{ setCurrency(props.data[coinId].brl_24h_vol) }}</span
     >
   </div>
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import LineChartSvg from "./LineChartSvg.vue";
 import useCurrency from "@/composables/useCurrency";
 import type CoinMarketChartInterface from "@/modules/interfaces/CoinMarketChartInterface";
 const { setCurrency } = useCurrency();
 type Coin = {
-  bitcoin: {
-    brl: number;
-    brl_24h_change: number;
-    brl_24h_vol: number;
-    brl_market_cap: number;
-  };
+  brl: number;
+  brl_24h_change: number;
+  brl_24h_vol: number;
+  brl_market_cap: number;
 };
-
 const props = defineProps<{
-  data: Coin;
+  data: any;
   chart: CoinMarketChartInterface;
+  coinId: string;
 }>();
+
+onMounted(() => {
+  console.log(props.data);
+});
 </script>
 
 <style scoped lang="scss">
