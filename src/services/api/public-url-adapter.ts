@@ -16,6 +16,8 @@ function coinDataBuilder(
     const URLWithTimestamp = {
       historicalURL: CoinGeckoAPI_V3.getHistoricalURL(id, currency, dateTime),
     };
+    console.log(URLWithTimestamp);
+
     urls = Object.assign(urls, { historical: URLWithTimestamp.historicalURL });
   }
   console.log(urls);

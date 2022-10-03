@@ -32,6 +32,8 @@ export default class CoinGeckoAPI_V3 {
     dateTime: string
   ) => {
     const convertDateToTimestamp = (dateTime: string) => {
+      console.log(dateTime);
+
       function actualDate(dateTime: string) {
         const adaptedDate = new Date(dateTime);
         // format: date-month-year hour(24):minute
@@ -42,9 +44,21 @@ export default class CoinGeckoAPI_V3 {
           hour: adaptedDate.getHours() === 0 ? "0" : adaptedDate.getHours() - 1,
           min: adaptedDate.getMinutes() === 0 ? "0" : adaptedDate.getMinutes(),
         };
+        console.log(
+          `${formatMap.mm}/${formatMap.dd}/${formatMap.aa} ${formatMap.hour}:${formatMap.min}`
+        );
+
         return `${formatMap.mm}/${formatMap.dd}/${formatMap.aa} ${formatMap.hour}:${formatMap.min}`;
       }
       const dateToParse = actualDate(dateTime).split(" ");
+
+      console.log(dateToParse);
+
+      console.log(
+        Math.floor(
+          new Date(`${dateToParse[0]} ${dateToParse[1]}`).getTime() / 1000
+        )
+      );
 
       return Math.floor(
         new Date(`${dateToParse[0]} ${dateToParse[1]}`).getTime() / 1000
@@ -61,7 +75,7 @@ export default class CoinGeckoAPI_V3 {
       "&from=" +
       convertedDateTime +
       "&to=" +
-      (convertedDateTime + 3600)
+      (convertedDateTime + 200000)
     );
   };
 }

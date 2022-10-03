@@ -1,5 +1,5 @@
 <template>
-  <svg :viewBox="`0 -1500 3460 2300`" class="chart">
+  <svg :viewBox="`0 -1100 3460 2300`" class="chart">
     <defs>
       <linearGradient
         id="myLinearGradient1"
