@@ -1,5 +1,5 @@
 <template>
-  <svg :viewBox="`0 -700 3460 2300`" class="chart">
+  <svg :viewBox="setViewBox()" class="chart">
     <defs>
       <linearGradient
         id="myLinearGradient1"
@@ -49,6 +49,30 @@ onMounted(() => {
   console.log(points);
   chartData.value = points.join(",");
 });
+
+function setViewBox() {
+  let viewBox: string;
+  switch (props.coin) {
+    case "bitcoin":
+      viewBox = "0 -700 3460 2300";
+      break;
+    case "ethereum":
+      viewBox = "0 -900 3460 2300";
+      break;
+    case "dacxi":
+      viewBox = "0 -600 3460 2300";
+      break;
+    case "cosmos":
+      viewBox = "0 -1200 3460 2300";
+      break;
+    case "terra-luna-2":
+      viewBox = "0 -900 3460 2300";
+      break;
+    default:
+      viewBox = "0 -700 3460 2300";
+  }
+  return viewBox;
+}
 </script>
 
 <style scoped>
