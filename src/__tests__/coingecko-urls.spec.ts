@@ -22,7 +22,7 @@ describe("criar urls do coingecko", () => {
     ];
     expect(sut).toBeDefined();
     expect(sut).toEqual(
-      "https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=brl&from=1662854400&to=1662858000"
+      "https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=brl&from=1662850800&to=1663050800"
     );
   });
 });

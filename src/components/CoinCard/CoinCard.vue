@@ -3,7 +3,10 @@
     v-if="props.data !== undefined"
     class="text-neutral-grey font-body shadow-2xl rounded-lg p-8 m-2 coin-card"
   >
-    <CoinCardHeader :current-data="props.currentData" />
+    <CoinCardHeader
+      :current-data="props.currentData"
+      v-if="props.currentData !== undefined"
+    />
     <div class="text-tertiary font-bold text-2xl text-center">
       {{ setCurrency(props.data[props.coinId].brl) }}
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <svg :viewBox="`0 -1100 3460 2300`" class="chart">
+  <svg :viewBox="`0 -700 3460 2300`" class="chart">
     <defs>
       <linearGradient
         id="myLinearGradient1"
@@ -9,8 +9,8 @@
         y2="100%"
         spreadMethod="pad"
       >
-        <stop offset="0%" stop-color="#B5D43C" stop-opacity="1" />
-        <stop offset="100%" stop-color="#065F46" stop-opacity="1" />
+        <stop offset="0%" stop-color="#2563EB" stop-opacity="1" />
+        <stop offset="100%" stop-color="#F43F5E" stop-opacity="1" />
       </linearGradient>
     </defs>
     <polyline
@@ -39,14 +39,14 @@ const chartData = ref<string>();
 const props = defineProps<{
   coinData: CoinMarketChartInterface;
   type: string;
+  coin: string;
 }>();
 
 const type = props.type as keyof CoinMarketChartInterface;
-const { points } = createPolylinePoints(props.coinData, type);
+const { points } = createPolylinePoints(props.coinData, type, props.coin);
 onMounted(() => {
   console.log(props);
   console.log(points);
-
   chartData.value = points.join(",");
 });
 </script>

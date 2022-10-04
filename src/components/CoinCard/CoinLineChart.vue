@@ -1,6 +1,6 @@
 <template>
   <div class="chart-wrapper" v-if="chart !== undefined">
-    <LineChartSvg :coinData="chart" :type="'market_caps'" />
+    <LineChartSvg :coinData="chart" :type="'market_caps'" :coin="coinId" />
     <p
       class="text-neutral-grey text-xs shadow-lg rounded-lg p-3 mb-3 bg-gradient-to-t from-terty to-secondary"
     >
@@ -18,12 +18,6 @@ import LineChartSvg from "./LineChartSvg.vue";
 import useCurrency from "@/composables/useCurrency";
 import type CoinMarketChartInterface from "@/modules/interfaces/CoinMarketChartInterface";
 const { setCurrency } = useCurrency();
-type Coin = {
-  brl: number;
-  brl_24h_change: number;
-  brl_24h_vol: number;
-  brl_market_cap: number;
-};
 const props = defineProps<{
   data: any;
   chart: CoinMarketChartInterface;

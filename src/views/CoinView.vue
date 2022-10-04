@@ -1,24 +1,26 @@
 <template>
   <div class="main">
-    <CoinCard
-      class="main__coin-card"
-      v-if="isLoaded"
-      :coin-id="coinId!"
-      :data="include"
-      :chart="market_chart!"
-      :current-data="current_data"
-    />
-    <CoinCard
-      class="main__coin-card"
-      v-else-if="isFirstLoad"
-      :coin-id="coinId!"
-      :data="include"
-      :chart="market_chart!"
-      :current-data="current_data"
-    />
-    <TheLoading v-else-if="!isFirstLoad && !isLoaded" />
-    <CryptosMenu />
-    <div class="historical border p-10 border-neutral-grey rounded-lg">
+    <div class="main__coin-card-block">
+      <CoinCard
+        class="main__coin-card"
+        v-if="isLoaded"
+        :coin-id="coinId!"
+        :data="include"
+        :chart="market_chart!"
+        :current-data="current_data"
+      />
+      <CoinCard
+        class="main__coin-card"
+        v-else-if="isFirstLoad"
+        :coin-id="coinId!"
+        :data="include"
+        :chart="market_chart!"
+        :current-data="current_data"
+      />
+      <TheLoading v-else-if="!isFirstLoad && !isLoaded" />
+    </div>
+    <CryptosMenu class="main__menu" />
+    <div class="main__historical border p-10 border-secondary rounded-lg">
       <p class="text-tertiary mb-6 font-regular text-xl text-center">
         Histórico:
       </p>
@@ -46,6 +48,7 @@ import Datepicker from "@vuepic/vue-datepicker";
 import CoinGeckoAPI_V3 from "@/modules/coingecko/coingecko-urls";
 import useCurrency from "@/composables/useCurrency";
 const { setCurrency } = useCurrency();
+
 function actualDate() {
   const timeElapsed = Date.now();
   const today = new Date(timeElapsed);
@@ -60,6 +63,9 @@ function actualDate() {
 }
 
 const route = useRoute();
+
+const reloadDataTimer = 10000;
+
 const coinId = ref<string>();
 const currency = ref<string>();
 const include = ref();
@@ -169,7 +175,7 @@ onMounted(() => {
       current_data
     );
     isLoaded.value = true;
-  }, 10000);
+  }, reloadDataTimer);
   isFirstLoad.value = true;
 });
 </script>
@@ -181,9 +187,41 @@ onMounted(() => {
   align-content: center;
   justify-items: center;
   background: transparent;
+  margin: 0 auto;
+  @media only screen and (min-width: 768px) {
+    width: clamp(700px, 100%, 1200px);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 20px;
+  }
   &__coin-card {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
+    @media only screen and (min-width: 768px) {
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+    }
+  }
+  &__coin-card-block {
+    min-height: 350px;
+    @media only screen and (min-width: 768px) {
+      min-height: 500px;
+      width: clamp(300px, 100%, 480px);
+      grid-column: 1 / 2;
+      grid-row: 1 / 3;
+    }
+  }
+  &__menu {
+    @media only screen and (min-width: 768px) {
+      grid-column: -2 / -1;
+      grid-row: 1 / 2;
+    }
+  }
+  &__historical {
+    @media only screen and (min-width: 768px) {
+      grid-column: -2 / -1;
+      grid-row: 2 / 3;
+    }
   }
 }
 </style>

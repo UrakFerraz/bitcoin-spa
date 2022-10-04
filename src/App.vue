@@ -1,18 +1,15 @@
 <template>
-  <div class="bg-primary p-10 bg-gradient-to-t from-primary to-secondary">
+  <div
+    class="bg-primary p-10 bg-gradient-to-t from-primary to-secondary page-background"
+  >
     <nav>
       <router-link
-        class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md border-primary border"
-        to="/"
-        >Home</router-link
-      >
-      <router-link
-        class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md border-primary border"
+        class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md"
         to="/coin/bitcoin"
         >Coin</router-link
       >
       <router-link
-        class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md border-primary border"
+        class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md"
         to="/about"
         >About</router-link
       >
@@ -31,7 +28,7 @@ const reload = computed(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 body {
   background: #191e29;
 }
@@ -42,9 +39,7 @@ nav {
   justify-content: center;
   gap: 20px;
 }
-
-.router-link-active,
-.router-link-exact-active {
-  border-color: #696e79;
+.page-background {
+  min-height: 100vh;
 }
 </style>
