@@ -1,88 +1,36 @@
 <template>
-  <div>
-    <p>{{ historical }}</p>
-    <p>{{ coinId }}</p>
-    <p>{{ currency }}</p>
-    <p>{{ include }}</p>
-    <p>{{ current_data }}</p>
-    <p>{{ dateTime }}</p>
-    <Suspense>
-      <template #default>
-        <p>{{ market_chart }}</p>
-      </template>
-      <template #fallback>
-        <div>loading...</div>
-      </template>
-    </Suspense>
+  <div class="about">
+    <p class="text-tertiary text-g">Crypto SPA desenvolvido com:</p>
+    <ul class="text-neutral-grey">
+      <li>Linguagem: Typescript</li>
+      <li>Framework: VueJS 3 (Vite)</li>
+      <li>Bibliotecas: Tailwind css</li>
+      <li>
+        Recursos: vue-router, script setup, composition API, scss, animação de
+        svg
+      </li>
+    </ul>
+    <p
+      class="text-neutral-light text-center mb-3 font-thin capitalize text-2xl text-left"
+    >
+      Autor: Urak Ferraz
+    </p>
+    <a
+      class="text-neutral-light text-center font-thin capitalize text-2xl text-left"
+      href="https://github.com/UrakFerraz"
+      >GitHub do autor</a
+    >
   </div>
 </template>
 
-<script async setup lang="ts">
-import { onBeforeMount, type Ref, ref } from "vue";
-import type CoinDataInterface from "@/modules/interfaces/CoinDataInterface";
-import PublicURLAdapter from "@/services/api/public-url-adapter";
+<script async setup lang="ts"></script>
 
-function actualDate() {
-  const timeElapsed = Date.now();
-  const today = new Date(timeElapsed);
-  const formatMap = {
-    mm: today.getMonth() + 1,
-    dd: today.getDate(),
-    aa: today.getFullYear().toString().slice(-2),
-    hour: today.getHours() === 0 ? "0" : today.getHours() - 1,
-    min: today.getMinutes() === 0 ? "0" : today.getMinutes(),
-  };
-  return `${formatMap.mm}/${formatMap.dd}/${formatMap.aa} ${formatMap.hour}:${formatMap.min}`;
+<style scoped lang="scss">
+.about {
+  display: flex;
+  flex-flow: column wrap;
+  min-height: 60vh;
+  justify-content: center;
+  gap: 30px;
 }
-
-const coinId = ref<string>();
-const currency = ref<string>();
-const include = ref<unknown>();
-const market_chart = ref<unknown>();
-const current_data = ref<unknown>();
-const historical = ref<unknown>();
-const dateTime = ref<string>();
-
-async function setCoinData(
-  id: string,
-  currency: string,
-  type: string,
-  dataRef: Ref<unknown>,
-  dateTime?: string
-) {
-  let coinDataURL: URL;
-  const typeName = type as keyof CoinDataInterface;
-  if (typeof dateTime === "string") {
-    const coinDataURLString = PublicURLAdapter.getURL(id, currency, dateTime)[
-      typeName
-    ] as string;
-    coinDataURL = new URL(coinDataURLString);
-  } else {
-    const coinDataURLString = PublicURLAdapter.getURL(id, currency)[
-      typeName
-    ] as string;
-    coinDataURL = new URL(coinDataURLString);
-  }
-  const response = await fetch(coinDataURL);
-  const data = await response.json();
-  dataRef.value = data;
-}
-
-onBeforeMount(async () => {
-  coinId.value = "bitcoin";
-  currency.value = "brl";
-  dateTime.value = actualDate();
-  await setCoinData(coinId.value, currency.value, "include", include);
-  await setCoinData(coinId.value, currency.value, "market_chart", market_chart);
-  await setCoinData(coinId.value, currency.value, "current_data", current_data);
-  await setCoinData(
-    coinId.value,
-    currency.value,
-    "historical",
-    historical,
-    dateTime.value
-  );
-});
-</script>
-
-<style scoped></style>
+</style>

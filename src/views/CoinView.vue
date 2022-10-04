@@ -17,7 +17,14 @@
         :chart="market_chart!"
         :current-data="current_data"
       />
-      <TheLoading v-else-if="!isFirstLoad && !isLoaded" />
+      <a
+        class="main__coingickoTag"
+        href="https://www.coingecko.com"
+        target="_blank"
+      >
+        <span class="text-sm text-neutral-grey">Data from</span>
+        <CoingeckoLogo class="main__coingickoTag__logo" />
+      </a>
     </div>
     <CryptosMenu class="main__menu" />
     <div class="main__historical border p-10 border-secondary rounded-lg">
@@ -40,13 +47,13 @@ import CoinCard from "@/components/CoinCard/CoinCard.vue";
 import { onBeforeMount, onMounted, type Ref, ref, watch, computed } from "vue";
 import type CoinDataInterface from "@/modules/interfaces/CoinDataInterface";
 import PublicURLAdapter from "@/services/api/public-url-adapter";
-import TheLoading from "@/components/TheLoading.vue";
-import { useRoute } from "vue-router";
+import { onBeforeRouteUpdate, useRoute } from "vue-router";
 import CryptosMenu from "@/components/CryptosMenu.vue";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Datepicker from "@vuepic/vue-datepicker";
 import CoinGeckoAPI_V3 from "@/modules/coingecko/coingecko-urls";
 import useCurrency from "@/composables/useCurrency";
+import CoingeckoLogo from "@/components/CoingeckoLogo.vue";
 const { setCurrency } = useCurrency();
 
 function actualDate() {
@@ -82,6 +89,7 @@ const historicalPrice = ref<{
   market_caps: number[][];
   total_volumes: number[][];
 }>();
+const timer = ref();
 
 const refreshPrice = computed(() => {
   console.log(historicalPrice.value);
@@ -160,7 +168,7 @@ onBeforeMount(async () => {
   );
 });
 onMounted(() => {
-  let timer = setInterval(async () => {
+  timer.value = setInterval(async () => {
     isLoaded.value = false;
     await setCoinData(
       coinId.value!,
@@ -177,6 +185,9 @@ onMounted(() => {
     isLoaded.value = true;
   }, reloadDataTimer);
   isFirstLoad.value = true;
+});
+onBeforeRouteUpdate(() => {
+  clearInterval(timer.value);
 });
 </script>
 
@@ -221,6 +232,19 @@ onMounted(() => {
     @media only screen and (min-width: 768px) {
       grid-column: -2 / -1;
       grid-row: 2 / 3;
+    }
+  }
+  &__coingickoTag {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    &__logo {
+      max-width: 100px;
+    }
+    & span {
+      margin-bottom: 1px;
     }
   }
 }
