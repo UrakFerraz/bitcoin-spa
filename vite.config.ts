@@ -5,7 +5,7 @@ import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./bitcoin-spa",
+  base: "/bitcoin-spa/",
   plugins: [vue()],
   resolve: {
     alias: {
