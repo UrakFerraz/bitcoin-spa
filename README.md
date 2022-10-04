@@ -1,6 +1,6 @@
 # bitcoin-spa
 
-This template should help get you started developing with Vue 3 in Vite.
+Crypto SPA desenvolvido em VueJS 3 (Vite) + typescript.
 
 ## Recommended IDE Setup
 

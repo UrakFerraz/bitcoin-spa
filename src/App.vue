@@ -6,12 +6,12 @@
       <router-link
         class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md"
         to="/coin/bitcoin"
-        >Coin</router-link
+        >Coins</router-link
       >
       <router-link
         class="bg-transparent pt-1 pb-1 pl-3 pr-3 text-neutral-grey rounded-md"
         to="/about"
-        >About</router-link
+        >Sobre</router-link
       >
     </nav>
     <router-view :key="reload" />

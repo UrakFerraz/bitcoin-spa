@@ -239,6 +239,7 @@ onBeforeRouteUpdate(() => {
     display: flex;
     align-items: center;
     justify-content: center;
+    min-width: 250px;
     gap: 10px;
     &__logo {
       max-width: 100px;
